@@ -10,13 +10,16 @@ class AdminAction extends HYBBS {
     public function __construct(){
         parent::__construct();
 
+        if($this->_user['group'] != C("ADMIN_GROUP"))
+            exit('你的账号不属于管理员!');
+
         {hook a_admin_init}
         //模板分组 admin 文件夹
         $this->view = 'admin';
 
 
         if(!IS_LOGIN)
-            exit('请登录前台!');
+            exit('请登录前台!'); // 验证不通过，直接跳转前台
         session('[start]');
         $md5 = session('admin');
         //echo $md5.'|';
